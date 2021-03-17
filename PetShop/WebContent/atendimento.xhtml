@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<body> 
+	<h:form>
+		<hr/>
+		<h:panelGrid columns="1">
+			<h:commandLink action="cliente?faces-redirect=true" value="Cadastro de Cliente" />
+			<h:commandLink action="animal?faces-redirect=true" value="Cadastro de Animal" />
+			<h:commandLink action="atendimento?faces-redirect=true" value="Registrar Atendimento" />
+		</h:panelGrid>
+		<hr/>
+	</h:form>
+	<br/>
+	<h:form>
+		<h:messages />
+		<h:panelGrid columns="2">
+			<h:outputLabel value="Descricao:" />
+			<h:inputTextarea value="#{atendimentoBean.atendimento.descricao}"/>
+			
+			<h:outputLabel value="Valor:" />
+			<h:inputText value="#{atendimentoBean.atendimento.valor}" />
+			
+			<h:outputLabel value="Pet:" />
+			<h:selectOneMenu value="#{atendimentoBean.idAnimal}">
+				<f:selectItem itemLabel="Selecione o animal. Verifique o nome e cpf do dono..." itemValue="0"/>
+				<f:selectItems value="#{atendimentoBean.animais}" var="animalAtual"
+								itemLabel="Nome: #{animalAtual.nome} _____ Dono: #{animalAtual.dono.nome} ______ CPF: #{animalAtual.dono.cpf}" 
+								itemValue="#{animalAtual.id}"/>
+			</h:selectOneMenu>
+			
+			<h:commandButton action="#{atendimentoBean.gravarAtendimento()}" value="Salvar"/>
+		</h:panelGrid>
+	</h:form>
+	<br/><br/>
+	
+	<h:form>
+		<h:dataTable value="#{atendimentoBean.atendimentos}" var="atendimentoAtual" border="1">
+			<h:column>
+				<f:facet name="header">Preço R$</f:facet>
+				<h:outputText value="#{atendimentoAtual.valor}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Pet</f:facet>
+				<h:outputText value="#{atendimentoAtual.animalAtendido.nome}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Dono</f:facet>
+				<h:outputText value="#{atendimentoAtual.animalAtendido.dono.nome}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Cpf do dono</f:facet>
+				<h:outputText value="#{atendimentoAtual.animalAtendido.dono.cpf}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Ação</f:facet>
+				<h:commandButton action="#{atendimentoBean.excluirAtendimento(atendimentoAtual)}" value="Excluir"/>
+				<h:commandButton action="#{atendimentoBean.selecionarAtendimento(atendimentoAtual)}" value="Detalhar"/>
+			</h:column>
+		</h:dataTable>
+	</h:form>
+</body> 
+</html>

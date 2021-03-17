@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<body> 
+	<h:form>
+		<hr/>
+		<h:panelGrid columns="1">
+			<h:commandLink action="cliente?faces-redirect=true" value="Cadastro de Cliente" />
+			<h:commandLink action="animal?faces-redirect=true" value="Cadastro de Animal" />
+			<h:commandLink action="atendimento?faces-redirect=true" value="Registrar Atendimento" />
+		</h:panelGrid>
+		<hr/>
+	</h:form>
+	<br/>
+	
+	<h:form>
+		<h:messages />
+		<h:panelGrid columns="2">
+			<h:outputLabel value="Nome:" />
+			<h:inputText value="#{animalBean.animal.nome}"/>
+			
+			<h:outputLabel value="Raça:" />
+			<h:inputText value="#{animalBean.animal.raca}" />
+			
+			<h:outputLabel value="Especie:" />
+			<h:inputText value="#{animalBean.animal.especie}" />
+			
+			<h:outputLabel value="Dono" />
+			<h:selectOneMenu value="#{animalBean.idDono}">
+				<f:selectItem itemLabel="Selecione..." itemValue="0"/>
+				<f:selectItems value="#{animalBean.donos}" var="donoAtual"
+								itemLabel="#{donoAtual.nome}" itemValue="#{donoAtual.id}"/>
+			</h:selectOneMenu>
+			
+			<h:commandButton action="#{animalBean.gravarAnimal()}" value="Salvar"/>
+		</h:panelGrid>
+	</h:form>
+	<br/><br/>
+	
+	<h:form>
+		<h:dataTable value="#{animalBean.animais}" var="animalAtual" border="1">
+			<h:column>
+				<f:facet name="header">Nome do animal</f:facet>
+				<h:outputText value="#{animalAtual.nome}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Raça do animal</f:facet>
+				<h:outputText value="#{animalAtual.raca}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Especie do animal</f:facet>
+				<h:outputText value="#{animalAtual.especie}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Dono</f:facet>
+				<h:outputText value="#{animalAtual.dono.nome}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Cpf do dono</f:facet>
+				<h:outputText value="#{animalAtual.dono.cpf}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Edição</f:facet>
+				<h:commandButton action="#{animalBean.editarAnimais(animalAtual)}" value="Editar"/>
+			</h:column>
+		</h:dataTable>
+	</h:form>
+</body> 
+</html>

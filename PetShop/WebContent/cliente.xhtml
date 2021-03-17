@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<body> 
+	<h:form>
+		<hr/>
+		<h:panelGrid columns="1">
+			<h:commandLink action="cliente?faces-redirect=true" value="Cadastro de Cliente" />
+			<h:commandLink action="animal?faces-redirect=true" value="Cadastro de Animal" />
+			<h:commandLink action="atendimento?faces-redirect=true" value="Registrar Atendimento" />
+		</h:panelGrid>
+		<hr/>
+	</h:form>
+	<br/>
+	
+	<h:form>
+		<h:messages />
+		<h:panelGrid columns="2">
+			<h:outputLabel value="Nome:" />
+			<h:inputText value="#{clienteBean.cliente.nome}" 
+						required="true" requiredMessage="Nome do cliente é obrigatório"/>
+			
+			<h:outputLabel value="CPF:" />
+			<h:inputText value="#{clienteBean.cliente.cpf}" />
+			
+			<h:outputLabel value="Rua:" />
+			<h:inputText value="#{clienteBean.cliente.endereco.rua}" />
+			
+			<h:outputLabel value="Número:" />
+			<h:inputText value="#{clienteBean.cliente.endereco.numero}" />
+			
+			<h:outputLabel value="Bairro:" />
+			<h:inputText value="#{clienteBean.cliente.endereco.bairro}" />
+			
+			<h:outputLabel value="Cidade:" />
+			<h:inputText value="#{clienteBean.cliente.endereco.cidade}" />
+			
+			<h:outputLabel value="Cep:" />
+			<h:inputText value="#{clienteBean.cliente.endereco.cep}" />
+			
+			<h:commandButton action="#{clienteBean.CadastrarCliente()}" value="Salvar"/>
+		</h:panelGrid>
+	</h:form>
+	<br/><br/>
+	<h:form>
+		<h:dataTable value="#{clienteBean.clientes}" var="clienteAtual" border="1">
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				<h:outputText value="#{clienteAtual.nome}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">CPF</f:facet>
+				<h:outputText value="#{clienteAtual.cpf}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Endereço</f:facet>
+				<h:outputText value="#{clienteAtual.endereco.enderecoResumido}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Ação</f:facet>
+				<h:commandButton action="#{clienteBean.carregarEdicao(clienteAtual)}" value="Editar"/>
+			</h:column>
+		</h:dataTable>
+	</h:form>
+
+</body> 
+</html>
